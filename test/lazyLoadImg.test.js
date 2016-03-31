@@ -1,6 +1,6 @@
 describe('lazy window',function(){
     var lazyFac,scope,$compile,$window;
-    beforeEach(module('lazyLoadImage'));
+    beforeEach(module('joc.lazyLoadImage'));
     beforeEach(inject(function(lazyLoadImage,_$compile_,$rootScope,_$window_) {
         lazyFac = lazyLoadImage;
         scope = $rootScope;
@@ -17,4 +17,10 @@ describe('lazy window',function(){
         $window.document.body.appendChild(el[0]);
         chai.expect(lazyFac.initLazyLoad()).to.be.true;
     });
+    it('del a direct from arr', function () {
+        var el = angular.element('<div lazy-image="img/foo.png"></div>');
+        lazyFac.saveDirect(el)
+        chai.expect(lazyFac.delDirect(0)).to.be.equal(el);
+
+    })
 });
