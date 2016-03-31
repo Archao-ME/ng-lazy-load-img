@@ -16,4 +16,5 @@
  - class : 初始样式,完成后会被替换为loaded-class
  - loaded-class : 图片加载完成后切换为此样式
 
- ## Demo:[ng-lazy-load-img](http://blog.pikach.com/ng-lazy-load-img/)
+
+## Demo:[ng-lazy-load-img](http://blog.pikach.com/ng-lazy-load-img/)
