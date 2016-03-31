@@ -81,6 +81,7 @@ angular.module('joc.lazyLoadImage',[]).factory('lazyLoadImage',['$window','$docu
             }
             lazyLoadImage.initLazyLoad();
             lazyLoadImage.saveDirect(elem);
+            //load the first screen;
             lazyLoadImage.lazyLoad();
         }
     }
