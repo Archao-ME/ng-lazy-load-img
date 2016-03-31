@@ -20,7 +20,6 @@ angular.module('joc.lazyLoadImage',[]).factory('lazyLoadImage',['$window','$docu
     }
     return {
         saveDirect : function (el) {
-
             return lazyArr.push(el) - 1; // return lazyArr key ;
         },
         delDirect : function (key) {
@@ -31,9 +30,7 @@ angular.module('joc.lazyLoadImage',[]).factory('lazyLoadImage',['$window','$docu
             }
         },
         doneLazyLoad : function () {
-            if(isLazy.length>0){
-
-            }else{
+            if(isLazy.length<=0){
                 isLazy = false;
                 lazyWindow.off('scroll',that.lazyLoad);
                 lazyWindow.off('resize',that.lazyLoad);
