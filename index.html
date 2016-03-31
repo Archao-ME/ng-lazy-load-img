@@ -20,7 +20,7 @@
 <body ng-app="sample-app">
 <h1>lazyLoad</h1>
 <p>you can set a init class and loaded-class.</p>
-<img lazy-img="https://angularjs.org/img/AngularJS-large.png" class="pre-load"/>
+<img lazy-img="https://angularjs.org/img/AngularJS-large.png" loaded-class="loaded" class="pre-load"/>
 <div ng-controller="demoController">
     <div ng-repeat="item in imgList">
         <img loaded-class={{item.loadedClass}} lazy-img={{item.src}} class="pre-load"/>
