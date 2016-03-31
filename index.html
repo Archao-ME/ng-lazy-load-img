@@ -2,20 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>LazyLoadImg</title>
+    <style>
+        .img{
+            max-width: 100%;
+        }
+        .loaded{
+            border-radius:10em;
+        }
+        .pre-load{
+            background: #ccc;
+            min-height:200px;
+            min-width:200px;
+        }
+    </style>
 </head>
-<body ng-app="lazyLoadImage">
+<body ng-app="sample-app">
+<h1>lazyLoad</h1>
+<p>you can set a init class and loaded-class.</p>
+<img lazy-img="https://angularjs.org/img/AngularJS-large.png" class="pre-load"/>
+<div ng-controller="demoController">
+    <div ng-repeat="item in imgList">
+        <img loaded-class={{item.loadedClass}} lazy-img={{item.src}} class="pre-load"/>
+    </div>
+</div>
 
-Hello World!
-<img lazy-img="https://www.google.com.sg/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"/>
-<div style="height: 500px">div</div>
-<div style="height: 500px">div</div>
-<img lazy-img="https://www.google.com.sg/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"/>
-<img lazy-img="http://htmljs.b0.upaiyun.com/uploads/1417158556053-%E6%9C%AA%E6%A0%87%E9%A2%98-5.png"/>
-<div style="height: 500px">div</div>
-<img lazy-img="http://htmljs.b0.upaiyun.com/uploads/1417158556053-%E6%9C%AA%E6%A0%87%E9%A2%98-5.png"/>
-<img lazy-img="https://docs.angularjs.org/img/angularjs-for-header-only.svg"/>
+
 <script src="node_modules/angular/angular.min.js"></script>
 <script src="src/lazyLoadImg.js"></script>
+<script type="application/javascript">
+    angular.module('sample-app',['joc.lazyLoadImage']).controller('demoController',['$scope',function($scope){
+        var imgList = [{
+            src : "http://attach.bbs.miui.com/forum/201112/08/123326q2kkzssbvkkododd.jpg",
+            loadedClass : "loaded img"
+        },{
+            src : "https://content.nike.com/content/dam/one-nike/en_us/season-2015-ho/NikeLab/1125-acg-cdp/desktop/HO15_NIKELAB_ACG_DESKTOP_CDP_v3_02.jpg.transform/full-screen/image.jpg",
+            loadedClass : "loaded img"
+        },{
+            src : "http://attach.bbs.miui.com/forum/201112/08/123326q2kkzssbvkkododd.jpg",
+            loadedClass : "loaded img"
+        }];
+        $scope.imgList = imgList;
+    }]);
+</script>
 </body>
 </html>
