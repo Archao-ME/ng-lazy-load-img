@@ -10,7 +10,10 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "uglifyjs": "uglifyjs src/*.js > dist/lazyLoadImg.min.js"
+    "uglifyjs": "uglifyjs src/*.js > dist/lazyLoadImg.min.js",
+    "jsdoc" : "jsdoc -t node_modules/minami/ src/lazyLoadImg.js",
+    "build" :"npm run jsdoc & npm run uglifyjs",
+    "gitpush" : "git push && git push origin_github master:master"
   },
   "keywords": [
     "angular",
@@ -34,6 +37,7 @@
     "karma-chai": "^0.1.0",
     "karma-mocha": "^0.2.2",
     "karma-phantomjs-launcher": "^1.0.0",
+    "minami": "^1.1.1",
     "mocha": "^2.4.5",
     "phantomjs-prebuilt": "^2.1.7",
     "uglify-js": "^2.6.2"

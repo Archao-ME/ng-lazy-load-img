@@ -1,13 +1,34 @@
+/**
+ *
+ * <h1>图片懒加载</h1>
+ * @module lazyLoadImage
+ * @see <a href="https://github.com/jesusalexander/ng-lazy-load-img">Github</a>
+ * @author jesusalexander
+ */
 angular.module('joc.lazyLoadImage',[]).factory('lazyLoadImage',['$window','$document', function ($window,$document) {
     'use strict';
     var lazyWindow = angular.element($window),lazyArr = [],isLazy = false;
     var that;
+    /**
+     * @method isVisible
+     * @menberof lazyLoadImage
+     * @param {document} ele  - element对象
+     * @returns {boolean} 是否可见
+     */
     var isVisible = function(ele){
         if(ele&&ele!=undefined){
             var position = ele[0].getBoundingClientRect();
             return position.top>0 && position.left>0 && position.top < Math.max($document[0].documentElement.clientHeight, $window.innerHeight||0) ? true : false;
         }
     };
+    /**
+     * @method isVisible
+     * @menberof lazyLoadImage
+     * @param {document} img <img>
+     * @param {requestCallback} callback callback函数
+     * @description 加载图片完成后调用callback
+     *
+     */
     var loadImg = function (img,callback) {
         var timer = setInterval(function () {
             if(img.complete){
@@ -16,6 +37,14 @@ angular.module('joc.lazyLoadImage',[]).factory('lazyLoadImage',['$window','$docu
             }
         },200);
     }
+    /**
+     * @method isVisible
+     * @menberof lazyLoadImage
+     * @description 函数节流
+     * @param {function} _func 需要节流的函数
+     * @param {init} _wait 频率(200ms)
+     * @returns _func的返回值
+     */
     var throttle = (function(){
         var func,context,timer,args,previous= 0, result,now,i=0;
         var run = function () {
@@ -41,9 +70,21 @@ angular.module('joc.lazyLoadImage',[]).factory('lazyLoadImage',['$window','$docu
         };
     })();
     return {
+        /**
+         * @public
+         * @menberof lazyLoadImg
+         * @param el
+         * @returns {number} key 返回lazyArr数组的key
+         */
         saveDirect : function (el) {
             return lazyArr.push(el) - 1; // return lazyArr key ;
         },
+        /**
+         * @public
+         * @menberof lazyLoadImg
+         * @param key lazyArr数组的key
+         * @returns {document} ele element对象
+         */
         delDirect : function (key) {
             if(lazyArr[key]){
                 var itemDel = lazyArr[key];
@@ -51,6 +92,11 @@ angular.module('joc.lazyLoadImage',[]).factory('lazyLoadImage',['$window','$docu
                 return itemDel;
             }
         },
+        /**
+         * @public
+         * @menberof lazyLoadImg
+         * @description 加载完成取消浏览器API绑定
+         */
         doneLazyLoad : function () {
             if(isLazy.length<=0){
                 isLazy = false;
@@ -59,6 +105,11 @@ angular.module('joc.lazyLoadImage',[]).factory('lazyLoadImage',['$window','$docu
                 console.log('done!');
             }
         },
+        /**
+         * @public
+         * @menberof lazyLoadImg
+         * @description 遍历lazyArr数组并判断是否可见,若可见调用loadImg完成加载后的样式转换
+         */
         lazyLoad : function () {
             var run = function () {
                 if(lazyArr.length>0){
@@ -78,6 +129,12 @@ angular.module('joc.lazyLoadImage',[]).factory('lazyLoadImage',['$window','$docu
             }
             throttle(run,200);
         },
+        /**
+         * @public
+         * @menberof lazyLoadImg
+         * @description 初始化,绑定scroll和resize事件
+         * @returns {boolean}
+         */
         initLazyLoad : function(){
             if(!this.isLazy){
                 that = this;
