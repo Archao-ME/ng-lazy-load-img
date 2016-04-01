@@ -8,6 +8,8 @@
 
 ## 使用方法:
 
+添加依赖: angular.module('my-app',['joc.lazyLoadImage'])
+
 ```
 <img lazy-img="https://angularjs.org/img/AngularJS-large.png" loaded-class="loaded" class="pre-load"/>
 ```
@@ -18,3 +20,7 @@
 
 
 ## Demo:[ng-lazy-load-img](http://blog.pikach.com/ng-lazy-load-img/)
+
+## Update :
+
+ - 0.1.0 : 函数节流,对scroll事件去抖
