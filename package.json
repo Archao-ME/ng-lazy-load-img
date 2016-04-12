@@ -13,7 +13,8 @@
     "uglifyjs": "uglifyjs src/*.js > dist/lazyLoadImg.min.js",
     "jsdoc" : "jsdoc -t node_modules/minami/ src/lazyLoadImg.js",
     "build" :"npm run jsdoc & npm run uglifyjs",
-    "gitpush" : "git push && git push origin_github master:master"
+    "gitpush" : "git push & git push origin_github master:master",
+    "gitDemo" : ""
   },
   "keywords": [
     "angular",

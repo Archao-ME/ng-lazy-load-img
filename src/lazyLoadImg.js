@@ -9,8 +9,8 @@ angular.module('joc.lazyLoadImage',[]).factory('lazyLoadImage',['$window','$docu
     'use strict';
     var lazyWindow = angular.element($window),lazyArr = [],isLazy = false;
     var that;
+    var lastItem = true;
     /**
-     * @method isVisible
      * @menberof lazyLoadImage
      * @param {document} ele  - element对象
      * @returns {boolean} 是否可见
@@ -22,7 +22,6 @@ angular.module('joc.lazyLoadImage',[]).factory('lazyLoadImage',['$window','$docu
         }
     };
     /**
-     * @method isVisible
      * @menberof lazyLoadImage
      * @param {document} img <img>
      * @param {requestCallback} callback callback函数
@@ -38,7 +37,6 @@ angular.module('joc.lazyLoadImage',[]).factory('lazyLoadImage',['$window','$docu
         },200);
     }
     /**
-     * @method isVisible
      * @menberof lazyLoadImage
      * @description 函数节流
      * @param {function} _func 需要节流的函数
@@ -48,7 +46,6 @@ angular.module('joc.lazyLoadImage',[]).factory('lazyLoadImage',['$window','$docu
     var throttle = (function(){
         var func,context,timer,args,previous= 0, result,now,i=0;
         var run = function () {
-            console.log('run'+i++);
             previous = Date.now();
             timer = null;
             result = func.apply(context,args);
@@ -70,6 +67,9 @@ angular.module('joc.lazyLoadImage',[]).factory('lazyLoadImage',['$window','$docu
         };
     })();
     return {
+        sayHi : function(){
+          console.log('HI!!!');
+        },
         /**
          * @public
          * @menberof lazyLoadImg
@@ -82,7 +82,7 @@ angular.module('joc.lazyLoadImage',[]).factory('lazyLoadImage',['$window','$docu
         /**
          * @public
          * @menberof lazyLoadImg
-         * @param key lazyArr数组的key
+         * @param key {int} lazyArr数组的key
          * @returns {document} ele element对象
          */
         delDirect : function (key) {
@@ -98,12 +98,10 @@ angular.module('joc.lazyLoadImage',[]).factory('lazyLoadImage',['$window','$docu
          * @description 加载完成取消浏览器API绑定
          */
         doneLazyLoad : function () {
-            if(isLazy.length<=0){
-                isLazy = false;
-                lazyWindow.off('scroll',that.lazyLoad);
-                lazyWindow.off('resize',that.lazyLoad);
-                console.log('done!');
-            }
+            isLazy = false;
+            lazyWindow.off('scroll',that.lazyLoad);
+            lazyWindow.off('resize',that.lazyLoad);
+            console.log('done!');
         },
         /**
          * @public
@@ -112,19 +110,25 @@ angular.module('joc.lazyLoadImage',[]).factory('lazyLoadImage',['$window','$docu
          */
         lazyLoad : function () {
             var run = function () {
-                if(lazyArr.length>0){
+                if(lazyArr.length>=0){
+                    lastItem = false;
                     angular.forEach(lazyArr, function (item,key) {
-                        if(isVisible(item)){
-                            console.log(item);
-                            item.attr('src',item.lazyAttr.lazyImg);
-                            that.delDirect(key);
-                            loadImg(item[0],function(){
-                                item.removeClass(item.attr('class'));
-                                item.addClass(item.lazyAttr.loadedClass);
-                                lazyArr.length<=0 ? that.doneLazyLoad() : 0;
-                            })
+                        if(item!=null){
+                            if(isVisible(item)){
+                                item.attr('src',item.lazyAttr.lazyImg);
+                                loadImg(item[0],function(){
+                                    item.removeClass(item.attr('class'));
+                                    item.addClass(item.lazyAttr.loadedClass);
+                                    lazyArr[key] = null;
+
+                                })
+                            }
+                            lastItem = true;
                         }
                     },that);
+                }
+                if(lastItem == false){
+                    that.doneLazyLoad();
                 }
             }
             throttle(run,200);
