@@ -1,6 +1,6 @@
 {
   "name": "ng-lazy-load-image",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "lazy image load for angular ",
   "files": [
     "Readme.md",

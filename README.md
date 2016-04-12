@@ -22,5 +22,6 @@
 ## Demo:[ng-lazy-load-img](http://blog.pikach.com/ng-lazy-load-img/)
 
 ## Update :
+ - 0.1.4 : FIXED Bug and update README
  - 0.1.1 : 更新README
  - 0.1.0 : 函数节流,对scroll事件去抖
